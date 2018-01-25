@@ -13,9 +13,12 @@
 *.gcno
 *.gcov
 
+Makefile
+
 /example
 /example64
 /examplesh
+/final
 /libz.so*
 /minigzip
 /minigzip64
