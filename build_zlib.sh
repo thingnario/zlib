@@ -6,6 +6,8 @@ if [ "$#" -ne 1 ]; then
     exit
 fi
 
+export PATH="$PATH:$1/bin"
+
 tool_chain_path=${1%/}
 
 ARCH=`echo $tool_chain_path | awk -F"/" '{print (NF>1)? $NF : $tool_chain_path}'`
