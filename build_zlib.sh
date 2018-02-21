@@ -1,4 +1,5 @@
-#!/bin/sh
+#!/bin/bash
+set -x
 
 if [ "$#" -ne 1 ]; then
     echo "Usage: ./build_zlib.sh target_architecture!"
@@ -6,16 +7,18 @@ if [ "$#" -ne 1 ]; then
     exit
 fi
 
-export PATH="$PATH:$1/bin"
+export PATH="$1/bin:$PATH"
 
 tool_chain_path=${1%/}
 
-ARCH=`echo $tool_chain_path | awk -F"/" '{print (NF>1)? $NF : $tool_chain_path}'`
+# linux architecture
+item=`ls $tool_chain_path/bin | grep gcc`
+IFS=' ' read -ra ADDR <<< "$item"
+item="${ADDR[0]}"
+ARCH=`echo $item | sed -e 's/-gcc.*//g'`
+
 export CHOST="$ARCH"
 
-./configure --prefix=`pwd`/final --static
+./configure --prefix=$tool_chain_path --static
 make 
-make install
-
-cd final
-cp -r * $tool_chain_path
+sudo make install

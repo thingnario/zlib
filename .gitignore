@@ -25,5 +25,6 @@ Makefile
 /minigzipsh
 /zlib.pc
 /configure.log
+ztest*
 
 .DS_Store
