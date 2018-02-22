@@ -7,7 +7,7 @@ if [ "$#" -ne 1 ]; then
     exit
 fi
 
-export PATH="$1/bin:$PATH"
+export PATH="$PATH:$1/bin"
 
 tool_chain_path=${1%/}
 
@@ -18,6 +18,7 @@ item="${ADDR[0]}"
 ARCH=`echo $item | sed -e 's/-gcc.*//g'`
 
 export CHOST="$ARCH"
+export CFLAGS="-fPIC"
 
 ./configure --prefix=$tool_chain_path --static
 make 
