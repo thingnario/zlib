@@ -20,6 +20,7 @@ ARCH=`echo $item | sed -e 's/-gcc.*//g'`
 export CHOST="$ARCH"
 export CFLAGS="-fPIC"
 
+make distclean
 ./configure --prefix=$tool_chain_path --static
 make 
 sudo make install
