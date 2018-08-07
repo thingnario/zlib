@@ -1,9 +1,9 @@
 #!/bin/bash
 set -x
 
-if [ "$#" -ne 1 ]; then
-    echo "Usage: ./build_zlib.sh target_architecture!"
-    echo "Example: ./build_zlib.sh arm-linux"
+if [ "$#" -ne 2 ]; then
+    echo "Usage: ./build_zlib.sh tool_chain_path install_path!"
+    echo "Example: ./build_zlib.sh /usr/local/arm-linux /Desktop/eric/logger/build/moxa-ia240/zlib"
     exit
 fi
 
@@ -20,7 +20,8 @@ ARCH=`echo $item | sed -e 's/-gcc.*//g'`
 export CHOST="$ARCH"
 export CFLAGS="-fPIC"
 
+make clean
 make distclean
-./configure --prefix=$tool_chain_path --static
+./configure --prefix=$2 --static
 make 
-sudo make install
+make install
